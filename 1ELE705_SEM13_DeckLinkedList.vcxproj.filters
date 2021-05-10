@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{c3ce3c73-23a0-479e-94ff-0f4490208172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{9a3659ad-e6d8-40e7-b948-d575e95cacc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Aux_Func.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="test\aux_functions.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Aux_Func.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\main.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="test\aux_functions.h">
+      <Filter>test</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
