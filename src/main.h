@@ -2,38 +2,17 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
+#include "cplx_op.h"
 
-//Legacy definitions
-
-typedef struct {
-	double a;
-	double b;
-} Cart;
-
-typedef struct {
-	double r;
-	double g;
-} Pol;
-
-typedef union {
-	Cart	cart;
-	Pol		pol;
-} Cplx;
-
-typedef struct {
-	Cplx s;
-	char* mode;
-} CplxNum;
-
-//Program definitions
+// Estruturas do jogo de cartas com listas ligadas
 
 typedef struct {
 	const char* face; // define pointer face   
 	const char* suit; // define pointer suit
 	unsigned int face_number; // Define o número da face da carta
 	unsigned int suit_number; // Define o número do naipe
-} Card; // end struct card    
+	char* mode;
+} Card; // end struct card  
 
 struct listCardNode {
 	Card card; /* Cada nó contém uma carta */
@@ -43,9 +22,18 @@ struct listCardNode {
 typedef struct listCardNode ListCardNode; /* synonym for struct listNode */
 typedef ListCardNode* ListCardNodePtr; /* synonym for ListNode* */
 
-// Protótipos das funções
-// void view(ListCardNodePtr lPtr, FILE* cfPtr);
-void shuffle(ListCardNodePtr* sPtr);
-void createOneFr52Deck(ListCardNodePtr* sPtr);
+struct stackCplxNode {
+	CplxNum cplx;
+	struct stackCplxNode* nextPtr;
+};
+typedef struct stackCplxNode StackCplxNode;
+typedef StackCplxNode* StackCplxNodePtr;
 
-#endif
+// Protótipos de função
+int push(StackCplxNodePtr* topPtr, CplxNum complex);
+CplxNum pop(StackCplxNodePtr* topPtr);
+int isEmptyStack(StackCplxNodePtr topPtr);
+int basicOpStack(StackCplxNodePtr* topPtr, const char* cmd, const char* outputmode);
+
+#endif // MAIN_H
+

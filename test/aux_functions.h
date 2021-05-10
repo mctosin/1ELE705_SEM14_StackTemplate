@@ -8,11 +8,10 @@
 extern "C"
 {
     #include "../src/main.h"
-    #include "../src/Aux_Func.h"
+    #include "../src/cplx_op.h"
     extern const char polar[];
     extern const char cartesian[];
 }
-
 
 template<size_t size>
 ::testing::AssertionResult ArraysMatch(const uint8_t(&expected)[size],
@@ -150,7 +149,7 @@ template<size_t size>
 
 ::testing::AssertionResult ComplexNumberNear(CplxNum expected, CplxNum actual, double tolerance)
 {
-    if (strcmp(expected.mode, cartesian)==0 && strcmp(actual.mode, cartesian)==0) {
+    if (strcmp(expected.mode, cartesian) == 0 && strcmp(actual.mode, cartesian) == 0) {
         if (fabs(expected.s.cart.a - actual.s.cart.a) > tolerance || fabs(expected.s.cart.b - actual.s.cart.b) > tolerance)
         {
             return ::testing::AssertionFailure() <<
@@ -176,6 +175,7 @@ template<size_t size>
 
     return ::testing::AssertionSuccess();
 }
+
 
 ::testing::AssertionResult ListMatch(ListCardNodePtr actualListPtr, ListCardNodePtr expectedListPtr)
 {
@@ -226,5 +226,28 @@ template<size_t size>
     }
     return ::testing::AssertionSuccess();
 }
+
+::testing::AssertionResult StackMatch(StackCplxNodePtr actualStackPtr, StackCplxNodePtr expectedStackPtr)
+{
+    StackCplxNodePtr actualPtr = actualStackPtr;
+    StackCplxNodePtr expectedPtr = expectedStackPtr;
+
+    while (actualPtr != NULL) {
+        if (expectedPtr == NULL) return ::testing::AssertionFailure() << "List Match Fail";
+        if (strcmp(actualPtr->cplx.mode, expectedPtr->cplx.mode) ||
+            (actualPtr->cplx.s.cart.a != expectedPtr->cplx.s.cart.a) ||
+            (actualPtr->cplx.s.cart.b != expectedPtr->cplx.s.cart.b)) {
+            return ::testing::AssertionFailure() << "List Match Fail";
+        }
+        actualPtr = actualPtr->nextPtr;
+        expectedPtr = expectedPtr->nextPtr;
+    }
+    if (expectedPtr != NULL) {
+        // No match!
+        return ::testing::AssertionFailure() << "List Match Fail";
+    }
+    return ::testing::AssertionSuccess();
+}
+
 
 #endif // AUX_FUNCTIONS_H
